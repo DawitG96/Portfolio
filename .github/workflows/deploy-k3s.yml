@@ -1,0 +1,34 @@
+name: Deploy to K3s
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Sync repository to Raspberry Pi
+      uses: appleboy/ssh-action@v0.1.6
+      with:
+        host: ${{ secrets.RASPBERRY_IP }}
+        username: pi
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd /home/pi/portfolio
+          git reset --hard
+          git pull origin main
+
+    - name: Restart Portfolio Deployment
+      uses: appleboy/ssh-action@v0.1.6
+      with:
+        host: ${{ secrets.RASPBERRY_IP }}
+        username: pi
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          kubectl rollout restart deployment portfolio
