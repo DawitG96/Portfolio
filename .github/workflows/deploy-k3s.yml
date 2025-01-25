@@ -17,7 +17,7 @@ jobs:
       uses: appleboy/ssh-action@v0.1.6
       with:
         host: ${{ secrets.RASPBERRY_IP }}
-        username: pi
+        username: dawit
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           cd /home/pi/portfolio
@@ -28,7 +28,7 @@ jobs:
       uses: appleboy/ssh-action@v0.1.6
       with:
         host: ${{ secrets.RASPBERRY_IP }}
-        username: pi
+        username: dawit
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           kubectl rollout restart deployment portfolio
