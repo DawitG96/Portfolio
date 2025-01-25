@@ -20,7 +20,7 @@ jobs:
         username: dawit
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          cd /home/pi/portfolio
+          cd /home/dawit/portfolio
           git reset --hard
           git pull origin main
 
