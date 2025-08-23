@@ -1,0 +1,172 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Modern CV for Tech Roles
+% Template by Gemini for Dawit Gulino
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fontawesome5}
+\usepackage{enumitem}
+
+% Set page margins
+\geometry{a4paper, left=0.75in, right=0.75in, top=0.75in, bottom=0.75in}
+
+% Define colors
+\definecolor{primarycolor}{HTML}{2c3e50} % Dark blue/grey
+\definecolor{secondarycolor}{HTML}{3498db} % Blue
+\definecolor{textcolor}{HTML}{4a4a4a} % Dark grey text
+
+% Set document colors and hyperlink style
+\color{textcolor}
+\hypersetup{
+    colorlinks=true,
+    urlcolor=secondarycolor,
+    linkcolor=secondarycolor,
+    breaklinks=true
+}
+
+% Remove page numbers
+\pagestyle{empty}
+
+% Customize section titles
+\titleformat{\section}
+  {\Large\scshape\color{primarycolor}}
+  {}
+  {0em}
+  {}
+  [\titlerule\vspace{0.5ex}]
+
+% Custom command for name and contact info
+\newcommand{\contactinfo}[5]{
+    \begin{center}
+        {\Huge\bfseries\color{primarycolor} #1}\\[4pt]
+        \large
+        \faMapMarker\hspace{1pt} #2 \hspace{6pt} | \hspace{6pt}
+        \faEnvelope\hspace{2pt} \href{mailto:#3}{#3} \hspace{6pt} | \hspace{6pt}
+        \faPhone\hspace{2pt} #4 \\[4pt]
+        \faLinkedin\hspace{2pt} \href{https://www.linkedin.com/in/#5}{linkedin.com/in/#5} \hspace{6pt} | \hspace{6pt}
+        \faGithub\hspace{2pt} \href{https://github.com/DawitG96}{github.com/DawitG96}
+    \end{center}
+}
+
+% Environment for work/education entries
+\newenvironment{entrylist}{
+    \begin{itemize}[leftmargin=*, label={}, noitemsep, topsep=0pt]
+}{
+    \end{itemize}
+}
+
+\newcommand{\entry}[4]{
+    \item
+    \textbf{#1} \hfill \textit{#2} \\
+    \textbf{\textit{#3}} \hfill \textit{#4}
+}
+
+% Environment for project entries
+\newcommand{\project}[2]{
+    \item
+    \textbf{#1} \\
+    #2
+}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%  DOCUMENT START    %
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+% --- PHOTO AND CONTACT INFO ---
+% Place a square profile photo named 'profile.jpg' next to this file.
+\begin{figure}[h]
+\centering
+% Use profile.png (upload this file alongside cv.tex when compiling)
+\includegraphics[width=3cm,height=3cm,keepaspectratio,clip]{profile.png}
+\end{figure}
+\vspace{-6ex}
+\contactinfo{Dawit Gulino}{Mortara, Italy}{dawit.gulino@gmail.com}{(+39) 331 857 5788}{dawitgulino}
+
+% --- SUMMARY ---
+\section*{Summary}
+Software Engineer with 4+ years of experience in full-stack web and IoT development. Specialized in building scalable, real-time data solutions using Java, Spring Boot, Apache Kafka, and Kubernetes. Passionate about tackling complex challenges and engineering high-impact products. Seeking to contribute my skills to a world-class team at Bending Spoons.
+
+% --- WORK EXPERIENCE ---
+\section*{Work Experience}
+\begin{entrylist}
+    \entry{Software Engineer}{Mar 2023 -- Present}{Olivetti S.p.A.}{Italy}
+    \begin{itemize}[leftmargin=1.5em, noitemsep, topsep=0.2ex]
+        \item Engineer and maintain a high-throughput data monetization platform, leveraging Apache Kafka for real-time data streaming and Google Kubernetes Engine (GKE) for scalable deployment.
+        \item Develop, test, and integrate full-stack IoT solutions using Java, Spring Boot, Angular, and MongoDB.
+    \end{itemize}
+
+    \entry{Junior Frontend Developer}{May 2021 -- Mar 2023}{Alten Italia}{Italy}
+    \begin{itemize}[leftmargin=1.5em, noitemsep, topsep=0.2ex]
+        \item Served as a consultant for clients in the banking sector.
+        \item Revamped and modernized client-facing web applications, developing responsive UI components, templates, and landing pages using PHP and modern frontend practices.
+    \end{itemize}
+
+    \entry{Machine Learning Intern}{Oct 2020 -- Nov 2020}{Thinkopen}{Assago, Italy}
+    \begin{itemize}[leftmargin=1.5em, noitemsep, topsep=0.2ex]
+        \item Developed and analyzed a facial expression recognition model using Python, which served as the foundation for my undergraduate thesis project.
+    \end{itemize}
+\end{entrylist}
+
+% --- EDUCATION ---
+\section*{Education}
+\begin{entrylist}
+    \entry{Master of Science in Smart Product Design 4.0}{2023}{Politecnico di Torino}{Italy}
+    \textit{Graduated Summa Cum Laude (110/110 e Lode)}
+
+    \entry{Bachelor of Science in Computer Science}{2020}{Università del Piemonte Orientale}{Vercelli, Italy}
+    \textit{Thesis: Development and Analysis of a Facial Expression Recognition Model}
+\end{entrylist}
+
+% --- TECHNICAL SKILLS ---
+\section*{Technical Skills}
+\begin{description}[style=multiline, labelwidth=3.5cm, leftmargin=!, noitemsep]
+    \item[Programming Languages] Java, C, Python, JavaScript, SQL, PHP, C# (basic)
+    \item[Skills & Highlights]
+    \begin{itemize}[leftmargin=1.5em, noitemsep]
+        \item Proficient in C, including data structures and synchronization of processes and threads.
+        \item Strong command of Java: team projects include implementing Minesweeper and a GUI, and designing a simple compiler.
+        \item Experience building an IoT application on Raspberry Pi for smart device management (Google Assistant integration, sensor-driven automation).
+        \item Familiarity with C# and ASP.NET MVC (implemented the web platform for the Smart Home project).
+        \item Familiar with Python and libraries for developing machine learning models.
+        \item Comfortable with Linux shell and Git for daily development workflows.
+    \end{itemize}
+    \item[Frameworks \& Tools] Spring Boot, Apache Kafka, Kubernetes (GKE), Docker, Angular, Keycloak, Firebase, MongoDB, Git
+    \item[Methodologies] DevOps, Agile
+\end{description}
+
+% --- PROJECTS ---
+\section*{Key Projects}
+\begin{entrylist}
+    \project{Smart Home IoT Controller (Academic Project)}{
+    Collaboratively designed and built a Raspberry Pi-based application to manage smart devices via Google Assistant and autonomous sensors. Developed the companion web platform using C\# and ASP.NET MVC.
+    }
+    \project{ifh-webapp (Angular / Keycloak / Firebase)}{A content-driven web application developed in Angular with Keycloak for authentication and Firebase for content storage and hosting. Includes a small CMS and dashboard used during university and subsequent personal projects.}
+\end{entrylist}
+
+% --- DEPLOYMENT NOTE ---
+\section*{Deployment and Operations}
+\begin{entrylist}
+    \project{Home Kubernetes Cluster}{Personal lab deployment: this portfolio and related services (Keycloak identity provider, container registry) are deployed and hosted on a home Kubernetes (k8s) cluster for experimentation with CI/CD and service operations.}
+\end{entrylist}
+
+% --- LANGUAGES ---
+\section*{Languages}
+\begin{description}[style=unboxed, noitemsep]
+    \item[Italian] Native
+    \item[English] Professionally Proficient (C1 Reading, B2 Spoken)
+\end{description}
+
+\end{document}
+
