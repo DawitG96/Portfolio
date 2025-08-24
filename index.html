@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -15,14 +15,10 @@
     <style>
         /* Small UI polish: round avatar, subtle shadow, responsive size */
         .masthead-avatar {
-            border-radius: 50%;
-            width: 140px;
-            height: 140px;
-            object-fit: cover;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.18);
-            border: 4px solid rgba(255,255,255,0.08);
+            object-fit:cover;
         }
-        .lang-switch { margin-left: 12px; }
+        .masthead { padding-top:3rem; padding-bottom:2rem; }
+        .masthead-heading { font-size:1.5rem; font-weight:600; margin-top:0.5rem; }
         .page-section-heading { letter-spacing: 0.2px; }
     </style>
     <!-- Fonts CSS-->
@@ -38,31 +34,25 @@
                 aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="#project"><span data-lang="it">Progetti</span><span data-lang="en">Projects</span></a>
+            <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                href="#project">Projects</a>
                     </li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="#experience"><span data-lang="it">Experience</span><span data-lang="en">Experience</span></a>
+            <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                href="#experience">Experience</a>
                     </li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="#education"><span data-lang="it">Education</span><span data-lang="en">Education</span></a>
+            <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                href="#education">Education</a>
                     </li>
-                    <li class="nav-item dropdown lang-switch">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="langMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">IT</a>
-                        <div class="dropdown-menu" aria-labelledby="langMenu">
-                            <a class="dropdown-item" href="#" onclick="setLang('it');return false;">Italiano</a>
-                            <a class="dropdown-item" href="#" onclick="setLang('en');return false;">English</a>
-                        </div>
-                    </li>
+            <!-- single-language (English) site -->
                 </ul>
             </div>
         </div>
     </nav>
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
-            <!-- Masthead Avatar Image--><img class="masthead-avatar mb-5" src="img/my-logo.png" alt="Dawit Gulino">
+            <!-- Masthead Avatar Image--><img class="masthead-avatar mb-3" src="img/my-logo.png" alt="Dawit Gulino">
             <!-- Masthead Heading-->
-            <h1 class="masthead-heading mb-0"><span data-lang="it">Sviluppatore Software / Web</span><span data-lang="en">Software / Web Developer</span></h1>
+            <h1 class="masthead-heading mb-0">Software / Web Developer</h1>
             <!-- Icon Divider-->
             <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
@@ -84,7 +74,7 @@
         <div class="container">
             <!-- projects Section Heading-->
             <div class="text-center">
-                <h2 class="page-section-heading text-secondary mb-0 d-inline-block"><span data-lang="it">Progetti</span><span data-lang="en">Projects</span></h2>
+                <h2 class="page-section-heading text-secondary mb-0 d-inline-block">Projects</h2>
             </div>
             <!-- Icon Divider-->
             <div class="divider-custom">
@@ -107,7 +97,7 @@
                         <img class="img-fluid" src="img/minesweeper.png" alt="Minefield" />
                     </div>
                     <h3 class="h4 mb-2">Minefield</h3>
-                    <p class="text-muted mb-0"><span data-lang="it">Sviluppo in Java del classico gioco 'Minesweeper'</span><span data-lang="en">Java development of the classic Microsoft game 'Minesweeper'</span></p>
+                    <p class="text-muted mb-0">Java development of the classic Microsoft game 'Minesweeper'</p>
                 </div>
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="portfolio-item mx-auto"
@@ -120,7 +110,7 @@
                         <img class="img-fluid" src="img/seniorstation.png" alt="SeniorAssistant" />
                     </div>
                     <h3 class="h4 mb-2">SeniorAssistant</h3>
-                    <p class="text-muted mb-0"><span data-lang="it">Sviluppo in Java di una home station per il Smart City Challenge 2018 su Raspberry Pi</span><span data-lang="en">Java development of a home station for the Smart City Challenge 2018 on a Raspberry Pi</span></p>
+                    <p class="text-muted mb-0">Java development of a home station for the Smart City Challenge 2018 on a Raspberry Pi</p>
                 </div>
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="portfolio-item mx-auto"
@@ -133,18 +123,19 @@
                         <img class="img-fluid" src="img/seniorcloud.png" alt="SeniorAssistantCloud" />
                     </div>
                     <h3 class="h4 mb-2">SeniorAssistant Cloud</h3>
-                    <p class="text-muted mb-0"><span data-lang="it">Piattaforma web implementata con ASP.NET (progetto universitario/proof-of-concept)</span><span data-lang="en">Web platform implemented using ASP.NET (academic/proof-of-concept)</span></p>
+                    <p class="text-muted mb-0">Web platform implemented using ASP.NET (academic / proof-of-concept)</p>
                 </div>
                 <!-- ifh-webapp project -->
                 <div class="col-md-6 col-lg-4 mb-5">
-                    <div class="portfolio-item mx-auto" onclick="window.location.href='https://github.com/DawitG96/ifh-webapp';">
+                    <div class="portfolio-item mx-auto" onclick="window.location.href='https://italian-family-hospitality.web.app/';">
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                             <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
                         <img class="img-fluid" src="img/ifh-webapp.png" alt="ifh-webapp" />
                     </div>
                     <h3 class="h4 mb-2">ifh-webapp</h3>
-                    <p class="text-muted mb-0"><span data-lang="it">Applicazione Angular con integrazione Keycloak per SSO e Firebase per contenuti e hosting; interfaccia di gestione dei contenuti.</span><span data-lang="en">Angular application with Keycloak SSO and Firebase integration for content management and hosting.</span></p>
+                    <p class="text-muted mb-0">Angular app deployed on Firebase hosting — integrates Keycloak for authentication and Firebase for content storage; includes a lightweight CMS and dashboard.</p>
+                    <p class="text-muted small mt-1"><a href="https://italian-family-hospitality.web.app/" target="_blank" rel="noopener">Visit site (Firebase hosting)</a></p>
                 </div>
             </div>
         </div>
@@ -154,7 +145,7 @@
         <div class="container">
             <!-- Experience Section Heading-->
                 <div class="text-center">
-                <h2 class="page-section-heading d-inline-block text-white"><span data-lang="it">Experience</span><span data-lang="en">Experience</span></h2>
+                <h2 class="page-section-heading d-inline-block text-white">Experience</h2>
             </div>
             <!-- Icon Divider-->
             <div class="divider-custom divider-light">
@@ -163,33 +154,32 @@
                 <div class="divider-custom-line"></div>
             </div>
             <!-- Experience Section Content-->
-            <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                <div class="flex-grow-1">
-                    <h3 class="mb-0"><span data-lang="it">FrontEnd Developer</span><span data-lang="en">FrontEnd Developer</span></h3>
-                    <div class="subheading mb-3">Alten Italia</div>
-                    <p>
-                        <br>
-                    </p>
+            <div class="d-flex flex-column mx-auto" style="max-width:900px; padding:0 1.5rem;"></div>
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start py-3">
+                    <div>
+                        <h3 class="mb-0">Software Engineer</h3>
+                        <div class="subheading mb-2">Olivetti S.p.A.</div>
+                        <p class="mb-0 text-muted" style="text-align:justify;">Engineering and maintaining a high-throughput data monetization platform; backend services in Java/Spring Boot, real-time streaming with Apache Kafka, containerized deployments on Kubernetes, and cloud data integrations.</p>
+                    </div>
+                    <div class="flex-shrink-0 mt-2 mt-md-0" style="color:orange;">Mar 2023 - Present</div>
                 </div>
-                <div class="flex-shrink-0"><span style="color:orange;">May 2021 - Present</span></div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 ml-auto">
-                    <p class="pre-wrap lead">
-                        <!--Something-->
-                    </p>
-                </div>
-                <div class="col-lg-4 mr-auto">
-                    <p class="pre-wrap lead">
-                        <!--Something-->
-                    </p>
+
+                <hr class="my-2">
+
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start py-3">
+                    <div>
+                        <h3 class="mb-0">FrontEnd Developer</h3>
+                        <div class="subheading mb-2">Alten Italia</div>
+                        <p class="mb-0 text-muted" style="text-align:justify;">Worked as a consultant modernizing client-facing web applications: implemented responsive UIs, interactive components, and improved frontend performance for banking clients.</p>
+                    </div>
+                    <div class="flex-shrink-0 mt-2 mt-md-0" style="color:orange;">May 2021 - Mar 2023</div>
                 </div>
             </div>
         </div>
     </section>
     <section class="page-section" id="education">
         <div class="container">
-            <!-- Contact Section Heading-->
+            <!-- Education Section Heading-->
                 <div class="text-center">
                 <h2 class="page-section-heading text-secondary d-inline-block mb-0"><span data-lang="it">Education</span><span data-lang="en">Education</span></h2>
             </div>
@@ -199,18 +189,8 @@
                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                 <div class="divider-custom-line"></div>
             </div>
-            <!-- Contact Section Content-->
             <div class="row justify-content-center">
-                <div class="col-lg-4">
-                    <div class="d-flex flex-column align-items-center">
-                        <div class="icon-contact mb-3"><i class="far fa-envelope"></i></div>
-                        <div class="text-muted">Email</div><a class="lead font-weight-bold" href="mailto:dawit.gulino@gmail.com">dawit.gulino@gmail.com</a>
-                        <!--Something-->
-                        </a>
-                    </div>
-                </div>
                 <div class="col-lg-6">
-                    <h4 class="mb-1"><span data-lang="it">Education &amp; Skills</span><span data-lang="en">Education &amp; Skills</span></h4>
                     <p class="text-muted small"><span data-lang="it">MSc in Smart Product Design 4.0 — Politecnico di Torino (Summa Cum Laude)</span><span data-lang="en">MSc in Smart Product Design 4.0 — Politecnico di Torino (Summa Cum Laude)</span>
                     </p>
                     <ul class="text-muted small">
@@ -220,20 +200,20 @@
                         <li><span data-lang="it">Python per progetti ML</span><span data-lang="en">Python for ML experiments</span></li>
                         <li><span data-lang="it">Linux shell, Git</span><span data-lang="en">Linux shell, Git</span></li>
                     </ul>
-                    <p class="text-muted small"><span data-lang="it">Nota: questo sito e alcuni servizi (Keycloak) sono deployati su un cluster Kubernetes domestico.</span><span data-lang="en">Note: this site and some related services (Keycloak) are deployed on a home Kubernetes cluster.</span></p>
+                    <p class="text-muted small">Note: this site and some related services (Keycloak) are deployed on a home Kubernetes cluster.</p>
                 </div>
             </div>
         </div>
     </section>
-    <footer class="footer text-center">
+    <footer class="footer text-center bg-dark text-white py-4">
         <div class="container">
-            <!--Something-->
+            <div class="d-flex flex-column align-items-center">
+                <div class="icon-contact mb-3"><i class="far fa-envelope"></i></div>
+            <p class="mb-1"><a class="text-light" href="mailto:dawit.gulino@gmail.com">dawit.gulino@gmail.com</a></p>
+            </div>
+            <small class="pre-wrap">Copyright © DawitGulino 2020</small>
         </div>
     </footer>
-    <!-- Copyright Section-->
-    <section class="copyright py-4 text-center text-white">
-        <div class="container"><small class="pre-wrap">Copyright © DawitGulino 2020 </small></div>
-    </section>
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
     <div class="scroll-to-top d-lg-none position-fixed"><a
             class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i
