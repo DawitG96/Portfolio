@@ -1,29 +1,34 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { Github, ExternalLink, Mail, Linkedin } from 'lucide-vue-next'
+import { usePortfolioStore } from '../stores/portfolio'
+import type { Project, Experience } from '../stores/portfolio'
 
-const { t, tm, rt } = useI18n()
+const { t, locale } = useI18n()
+const store = usePortfolioStore()
 
-// Retrieve projects and jobs from i18n dynamically
+onMounted(() => {
+  store.fetchAll()
+})
+
+// Retrieve projects and jobs from backend via pinia dynamically
 const projects = computed(() => {
-  const items = tm('projects.items') || []
-  return (Array.isArray(items) ? items : []).map(item => ({
-    title: rt(item.title) || '',
-    description: rt(item.description) || '',
-    image: rt(item.image) || '',
-    link: rt(item.link) || '',
-    source: rt(item.source) || ''
+  return store.projects.map((item: Project) => ({
+    title: locale.value === 'it' ? item.titleIt : item.titleEn,
+    description: locale.value === 'it' ? item.descriptionIt : item.descriptionEn,
+    image: item.imageUrl,
+    link: item.linkUrl,
+    source: item.sourceUrl
   }))
 })
 
 const jobs = computed(() => {
-  const items = tm('experience.items') || []
-  return (Array.isArray(items) ? items : []).map(item => ({
-    title: rt(item.title) || '',
-    company: rt(item.company) || '',
-    period: rt(item.period) || '',
-    description: rt(item.description) || ''
+  return store.experiences.map((item: Experience) => ({
+    title: locale.value === 'it' ? item.titleIt : item.titleEn,
+    company: item.company,
+    period: locale.value === 'it' ? item.periodIt : item.periodEn,
+    description: locale.value === 'it' ? item.descriptionIt : item.descriptionEn
   }))
 })
 </script>
