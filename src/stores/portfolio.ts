@@ -46,10 +46,23 @@ export interface Experience {
   descriptionIt: string
 }
 
+export interface Education {
+  id?: number
+  school: string
+  orderIndex: number
+  degreeEn: string
+  periodEn: string
+  descriptionEn: string
+  degreeIt: string
+  periodIt: string
+  descriptionIt: string
+}
+
 export const usePortfolioStore = defineStore('portfolio', {
   state: () => ({
     projects: [] as Project[],
     experiences: [] as Experience[],
+    educations: [] as Education[],
     loading: false,
     error: null as string | null
   }),
@@ -58,12 +71,14 @@ export const usePortfolioStore = defineStore('portfolio', {
       this.loading = true
       this.error = null
       try {
-        const [projRes, expRes] = await Promise.all([
+        const [projRes, expRes, eduRes] = await Promise.all([
           api.get<Project[]>('/projects'),
-          api.get<Experience[]>('/experiences')
+          api.get<Experience[]>('/experiences'),
+          api.get<Education[]>('/educations')
         ])
         this.projects = projRes.data
         this.experiences = expRes.data
+        this.educations = eduRes.data
       } catch (err: any) {
         console.error('Fail to load data', err)
         this.error = err.message || 'Failed to load portfolio data'
@@ -121,6 +136,32 @@ export const usePortfolioStore = defineStore('portfolio', {
          this.experiences = this.experiences.filter(e => e.id !== id)
       } catch (err) {
         console.error('Failed to delete exp', err)
+        throw err
+      }
+    },
+
+    async saveEducation(edu: Education) {
+      try {
+        const res = await api.post<Education>('/educations', edu)
+        const idx = this.educations.findIndex(e => e.id === res.data.id)
+        if (idx !== -1) {
+          this.educations[idx] = res.data
+        } else {
+          this.educations.push(res.data)
+        }
+        this.educations.sort((a,b) => a.orderIndex - b.orderIndex)
+      } catch (err) {
+        console.error('Failed to save education', err)
+        throw err
+      }
+    },
+
+    async deleteEducation(id: number) {
+      try {
+         await api.delete(`/educations/${id}`)
+         this.educations = this.educations.filter(e => e.id !== id)
+      } catch (err) {
+        console.error('Failed to delete education', err)
         throw err
       }
     }

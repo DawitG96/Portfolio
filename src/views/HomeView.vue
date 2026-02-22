@@ -3,7 +3,7 @@ import { useI18n } from 'vue-i18n'
 import { computed, onMounted } from 'vue'
 import { Github, ExternalLink, Mail, Linkedin } from 'lucide-vue-next'
 import { usePortfolioStore } from '../stores/portfolio'
-import type { Project, Experience } from '../stores/portfolio'
+import type { Project, Experience, Education } from '../stores/portfolio'
 
 const { t, locale } = useI18n()
 const store = usePortfolioStore()
@@ -27,6 +27,15 @@ const jobs = computed(() => {
   return store.experiences.map((item: Experience) => ({
     title: locale.value === 'it' ? item.titleIt : item.titleEn,
     company: item.company,
+    period: locale.value === 'it' ? item.periodIt : item.periodEn,
+    description: locale.value === 'it' ? item.descriptionIt : item.descriptionEn
+  }))
+})
+
+const educations = computed(() => {
+  return store.educations.map((item: Education) => ({
+    degree: locale.value === 'it' ? item.degreeIt : item.degreeEn,
+    school: item.school,
     period: locale.value === 'it' ? item.periodIt : item.periodEn,
     description: locale.value === 'it' ? item.descriptionIt : item.descriptionEn
   }))
@@ -143,41 +152,22 @@ const jobs = computed(() => {
           {{ t('education.title') }}
         </h2>
         
-        <div class="bg-slate-900 p-8 rounded-3xl border border-slate-700 shadow-2xl relative overflow-hidden">
-          <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
-          
-          <div class="relative z-10">
-            <h3 class="text-xl font-bold text-emerald-400 mb-6">
-              {{ t('education.degree') }}
-            </h3>
+        <div class="space-y-8">
+          <div v-for="(edu, index) in educations" :key="index" class="bg-slate-900 p-8 rounded-3xl border border-slate-700 shadow-2xl relative overflow-hidden transition-transform hover:-translate-y-1 hover:border-emerald-500/30">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
             
-            <ul class="space-y-4 text-slate-300 mb-8 list-none">
-              <li class="flex items-start">
-                <div class="w-2 h-2 mt-2 mr-3 bg-emerald-400 rounded-full shrink-0"></div>
-                <span>{{ t('education.skills.c') }}</span>
-              </li>
-              <li class="flex items-start">
-                <div class="w-2 h-2 mt-2 mr-3 bg-blue-400 rounded-full shrink-0"></div>
-                <span>{{ t('education.skills.java') }}</span>
-              </li>
-              <li class="flex items-start">
-                <div class="w-2 h-2 mt-2 mr-3 bg-purple-400 rounded-full shrink-0"></div>
-                <span>{{ t('education.skills.csharp') }}</span>
-              </li>
-              <li class="flex items-start">
-                <div class="w-2 h-2 mt-2 mr-3 bg-yellow-400 rounded-full shrink-0"></div>
-                <span>{{ t('education.skills.python') }}</span>
-              </li>
-              <li class="flex items-start">
-                <div class="w-2 h-2 mt-2 mr-3 bg-slate-400 rounded-full shrink-0"></div>
-                <span>{{ t('education.skills.tools') }}</span>
-              </li>
-            </ul>
-            
-            <div v-if="t('education.note')" class="bg-slate-800/50 p-4 rounded-xl border border-slate-700 flex items-start">
-              <div class="mr-3 text-blue-400 shrink-0">ℹ️</div>
-              <p class="text-sm text-slate-400 italic">
-                {{ t('education.note') }}
+            <div class="relative z-10">
+              <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 items-start sm:items-center justify-between mb-4">
+                <div>
+                  <h3 class="text-xl font-bold text-emerald-400">{{ edu.degree }}</h3>
+                  <div class="text-white font-medium mt-1">{{ edu.school }}</div>
+                </div>
+                <time class="text-sm font-medium text-slate-400 bg-slate-800 px-3 py-1 rounded-full whitespace-nowrap border border-slate-700">
+                  {{ edu.period }}
+                </time>
+              </div>
+              <p class="text-slate-300 leading-relaxed text-balance whitespace-pre-wrap">
+                {{ edu.description }}
               </p>
             </div>
           </div>

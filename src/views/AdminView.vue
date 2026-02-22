@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { usePortfolioStore } from '../stores/portfolio'
-import type { Project, Experience } from '../stores/portfolio'
+import type { Project, Experience, Education } from '../stores/portfolio'
 import { keycloak } from '../services/keycloak'
 import { useRouter } from 'vue-router'
 
 const store = usePortfolioStore()
 const router = useRouter()
 
-const activeTab = ref<'projects' | 'experiences'>('projects')
+const activeTab = ref<'projects' | 'experiences' | 'educations'>('projects')
 
 const newProject = ref<Project>({
   imageUrl: '',
@@ -28,6 +28,17 @@ const newExperience = ref<Experience>({
   periodEn: '',
   descriptionEn: '',
   titleIt: '',
+  periodIt: '',
+  descriptionIt: ''
+})
+
+const newEducation = ref<Education>({
+  school: '',
+  orderIndex: 0,
+  degreeEn: '',
+  periodEn: '',
+  descriptionEn: '',
+  degreeIt: '',
   periodIt: '',
   descriptionIt: ''
 })
@@ -85,6 +96,29 @@ const handleDeleteExperience = async (id: number | undefined) => {
     }
   }
 }
+
+const handleSaveEducation = async () => {
+  try {
+    await store.saveEducation({ ...newEducation.value })
+    newEducation.value = {
+      school: '', orderIndex: store.educations.length + 1,
+      degreeEn: '', periodEn: '', descriptionEn: '',
+      degreeIt: '', periodIt: '', descriptionIt: ''
+    }
+  } catch (e) {
+    alert('Failed to save education')
+  }
+}
+
+const handleDeleteEducation = async (id: number | undefined) => {
+  if (id && confirm('Delete this education?')) {
+    try {
+      await store.deleteEducation(id)
+    } catch (e) {
+      alert('Delete failed')
+    }
+  }
+}
 </script>
 
 <template>
@@ -111,6 +145,9 @@ const handleDeleteExperience = async (id: number | undefined) => {
       </button>
       <button @click="activeTab = 'experiences'" :class="['px-4 py-2 font-medium rounded-t-lg transition-colors', activeTab === 'experiences' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800']">
         Experiences
+      </button>
+      <button @click="activeTab = 'educations'" :class="['px-4 py-2 font-medium rounded-t-lg transition-colors', activeTab === 'educations' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800']">
+        Education
       </button>
     </div>
 
@@ -178,6 +215,41 @@ const handleDeleteExperience = async (id: number | undefined) => {
             <p class="text-sm text-slate-400 mt-1 truncate max-w-2xl">{{ e.descriptionEn }}</p>
           </div>
           <button @click="handleDeleteExperience(e.id)" class="text-red-400 hover:text-red-300 bg-red-400/10 hover:bg-red-400/20 px-3 py-1.5 rounded-lg transition-colors">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Educations Section -->
+    <div v-if="activeTab === 'educations'" class="space-y-8 animate-in fade-in">
+      <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg">
+        <h2 class="text-xl font-bold text-white mb-4">Add New Education</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input v-model="newEducation.degreeEn" placeholder="Degree (EN)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
+          <input v-model="newEducation.degreeIt" placeholder="Degree (IT)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
+          
+          <input v-model="newEducation.school" placeholder="School/University Name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
+          <input v-model.number="newEducation.orderIndex" type="number" placeholder="Order Index (0, 1, 2...)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
+
+          <input v-model="newEducation.periodEn" placeholder="Period (EN) e.g. 2018 - 2021" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
+          <input v-model="newEducation.periodIt" placeholder="Period (IT) e.g. 2018 - 2021" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
+          
+          <textarea v-model="newEducation.descriptionEn" placeholder="Description (EN)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white h-24"></textarea>
+          <textarea v-model="newEducation.descriptionIt" placeholder="Description (IT)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white h-24"></textarea>
+        </div>
+        <button @click="handleSaveEducation" class="mt-4 py-2 px-6 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors">
+          Save Education
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4">
+        <div v-for="e in store.educations" :key="e.id" class="bg-slate-800/50 p-4 rounded-xl border border-slate-700 flex justify-between items-center group">
+          <div>
+            <h3 class="text-lg font-bold text-white">{{ e.degreeEn }} at {{ e.school }} <span class="text-xs ml-2 bg-slate-700 px-2 py-1 rounded">Order: {{ e.orderIndex }}</span></h3>
+            <p class="text-sm text-slate-400 mt-1 truncate max-w-2xl">{{ e.descriptionEn }}</p>
+          </div>
+          <button @click="handleDeleteEducation(e.id)" class="text-red-400 hover:text-red-300 bg-red-400/10 hover:bg-red-400/20 px-3 py-1.5 rounded-lg transition-colors">
             Delete
           </button>
         </div>
