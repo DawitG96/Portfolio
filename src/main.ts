@@ -1,0 +1,22 @@
+import { createApp } from 'vue'
+import './style.css'
+import App from './App.vue'
+import { i18n } from './i18n'
+import router from './router'
+import { createPinia } from 'pinia'
+import { initKeycloak } from './services/keycloak'
+
+const bootstrap = async () => {
+  // Try to initialize keycloak. Error or not, we mount the public app
+  await initKeycloak()
+  
+  const app = createApp(App)
+
+  app.use(createPinia())
+  app.use(router)
+  app.use(i18n)
+
+  app.mount('#app')
+}
+
+bootstrap()
