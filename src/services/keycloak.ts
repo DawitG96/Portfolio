@@ -9,7 +9,7 @@ interface KeycloakConfig {
 const config: KeycloakConfig = {
   url: 'https://dawit.sytes.net/auth',
   realm: 'myhome',
-  clientId: 'portfolio-client' // you will need to create this client in your Keycloak realm
+  clientId: 'myhome-web'
 }
 
 export const keycloak = new Keycloak(config)
@@ -19,7 +19,8 @@ export const initKeycloak = async (): Promise<boolean> => {
     const authenticated = await keycloak.init({
       onLoad: 'check-sso',
       silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
-      pkceMethod: 'S256'
+      pkceMethod: 'S256',
+      checkLoginIframe: false
     })
     
     // Setup token refresh

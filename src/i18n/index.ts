@@ -9,7 +9,7 @@ const messages = {
       admin: 'Admin'
     },
     hero: {
-      title: 'Software Engineer',
+      title: 'Full Stack Engineer',
       subtitle: ''
     },
     projects: {
@@ -103,7 +103,7 @@ const messages = {
       admin: 'Admin'
     },
     hero: {
-      title: 'Ingegnere del Software',
+      title: 'Ingegnere Full Stack',
       subtitle: ''
     },
     projects: {
