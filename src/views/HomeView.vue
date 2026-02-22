@@ -1,51 +1,31 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import { computed } from 'vue'
 import { Github, ExternalLink, Mail, Linkedin } from 'lucide-vue-next'
 
-const { t } = useI18n()
+const { t, tm, rt } = useI18n()
 
-// Placeholder Data, in a real app this would eventually come from the Pinia store / backend
-const projects = [
-  {
-    title: 'ifh-webapp',
-    description: 'Angular app deployed on Firebase hosting — integrates Keycloak for authentication and Firebase for content storage; includes a lightweight CMS and dashboard.',
-    image: new URL('@/assets/img/ifh-webapp.png', import.meta.url).href,
-    link: 'https://italian-family-hospitality.web.app/'
-  },
-  {
-    title: 'Minefield',
-    description: "Java development of the classic Microsoft game 'Minesweeper'",
-    image: new URL('@/assets/img/minesweeper.png', import.meta.url).href,
-    source: 'https://github.com/DawitG96/Minefield'
-  },
-  {
-    title: 'SeniorAssistant',
-    description: 'Java development of a home station for the Smart City Challenge 2018 on a Raspberry Pi',
-    image: new URL('@/assets/img/seniorstation.png', import.meta.url).href,
-    source: 'https://github.com/DawitG96/SeniorAssistant'
-  },
-  {
-    title: 'SeniorAssistant Cloud',
-    description: 'Web platform implemented using ASP.NET (academic / proof-of-concept)',
-    image: new URL('@/assets/img/seniorcloud.png', import.meta.url).href,
-    source: 'https://github.com/DawitG96/SeniorAssistant-Web'
-  }
-]
+// Retrieve projects and jobs from i18n dynamically
+const projects = computed(() => {
+  const items = tm('projects.items') || []
+  return (Array.isArray(items) ? items : []).map(item => ({
+    title: rt(item.title) || '',
+    description: rt(item.description) || '',
+    image: rt(item.image) || '',
+    link: rt(item.link) || '',
+    source: rt(item.source) || ''
+  }))
+})
 
-const jobs = [
-  {
-    title: 'Software Engineer',
-    company: 'Olivetti S.p.A.',
-    period: 'Mar 2023 - Present',
-    description: 'Engineering and maintaining a high-throughput data monetization platform; backend services in Java/Spring Boot, real-time streaming with Apache Kafka, containerized deployments on Kubernetes (GKE), and CI/CD integration with Bitbucket and Bamboo. Additionally involved in frontend development using Angular.'
-  },
-  {
-    title: 'FrontEnd Developer',
-    company: 'Alten Italia',
-    period: 'May 2021 - Mar 2023',
-    description: 'Worked as a consultant modernizing client-facing web applications: implemented responsive UIs, interactive components, and improved frontend performance for banking clients.'
-  }
-]
+const jobs = computed(() => {
+  const items = tm('experience.items') || []
+  return (Array.isArray(items) ? items : []).map(item => ({
+    title: rt(item.title) || '',
+    company: rt(item.company) || '',
+    period: rt(item.period) || '',
+    description: rt(item.description) || ''
+  }))
+})
 </script>
 
 <template>
@@ -59,15 +39,15 @@ const jobs = [
       </div>
       
       <div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-        <img src="@/assets/img/my-logo.png" alt="Dawit Gulino" class="w-40 h-40 rounded-full object-cover border-4 border-slate-800 shadow-2xl mb-8 ring-4 ring-blue-500/20" />
+        <img src="/img/my-logo.png" alt="Dawit Gulino" class="w-40 h-40 rounded-full object-cover border-4 border-slate-800 shadow-2xl mb-8 ring-4 ring-blue-500/20" />
         <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">
           {{ t('hero.title') }}
         </h1>
-        <p class="text-xl md:text-2xl text-slate-300 mb-10 max-w-2xl text-balance">
+        <p v-if="t('hero.subtitle')" class="text-xl md:text-2xl text-slate-300 mb-10 max-w-2xl text-balance">
           {{ t('hero.subtitle') }}
         </p>
         
-        <div class="flex space-x-6">
+        <div class="flex space-x-6 mt-6">
           <a href="https://www.linkedin.com/in/dawitgulino" target="_blank" rel="noopener" class="text-slate-400 hover:text-blue-400 transition-colors bg-slate-800 p-3 rounded-full hover:bg-slate-700 ring-1 ring-slate-700">
             <Linkedin class="w-6 h-6" />
           </a>
@@ -89,31 +69,32 @@ const jobs = [
         </h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div v-for="project in projects" :key="project.title" 
-               class="bg-slate-900 rounded-2xl overflow-hidden border border-slate-700 shadow-xl transition-transform hover:-translate-y-2 hover:shadow-2xl hover:border-blue-500/30 flex flex-col">
-            <div class="aspect-video overflow-hidden">
-              <img :src="project.image" :alt="project.title" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
-            </div>
-            <div class="p-6 flex flex-col flex-grow">
-              <h3 class="text-xl font-bold text-white mb-2">{{ project.title }}</h3>
-              <p class="text-slate-400 mb-6 flex-grow text-sm text-balance">
-                {{ project.description }}
-              </p>
-              
-              <div class="mt-auto">
-                <a v-if="project.link" :href="project.link" target="_blank" rel="noopener"
-                   class="inline-flex items-center text-sm font-medium text-blue-400 hover:text-blue-300">
-                  <ExternalLink class="w-4 h-4 mr-2" />
-                  {{ t('projects.viewSite') }}
-                </a>
-                <a v-if="project.source" :href="project.source" target="_blank" rel="noopener"
-                   class="inline-flex items-center text-sm font-medium text-slate-300 hover:text-white">
-                  <Github class="w-4 h-4 mr-2" />
-                  {{ t('projects.sourceCode') }}
-                </a>
+          <template v-for="project in projects" :key="project.title">
+            <div v-if="project.image" class="bg-slate-900 rounded-2xl overflow-hidden border border-slate-700 shadow-xl transition-transform hover:-translate-y-2 hover:shadow-2xl hover:border-blue-500/30 flex flex-col">
+              <div class="aspect-video overflow-hidden">
+                <img :src="project.image" :alt="project.title" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+              </div>
+              <div class="p-6 flex flex-col flex-grow">
+                <h3 class="text-xl font-bold text-white mb-2">{{ project.title }}</h3>
+                <p class="text-slate-400 mb-6 flex-grow text-sm text-balance">
+                  {{ project.description }}
+                </p>
+                
+                <div class="mt-auto flex flex-wrap gap-4">
+                  <a v-if="project.link" :href="project.link" target="_blank" rel="noopener"
+                     class="inline-flex items-center text-sm font-medium text-blue-400 hover:text-blue-300">
+                    <ExternalLink class="w-4 h-4 mr-2" />
+                    {{ t('projects.viewSite') }}
+                  </a>
+                  <a v-if="project.source" :href="project.source" target="_blank" rel="noopener"
+                     class="inline-flex items-center text-sm font-medium text-slate-300 hover:text-white">
+                    <Github class="w-4 h-4 mr-2" />
+                    {{ t('projects.sourceCode') }}
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
+          </template>
         </div>
       </div>
     </section>
@@ -138,7 +119,7 @@ const jobs = [
                   <div class="text-blue-400 font-medium">{{ job.company }}</div>
                 </div>
                 <time class="text-sm font-medium text-slate-400 bg-slate-900/50 px-3 py-1 rounded-full whitespace-nowrap border border-slate-700">
-                  {{ job.period.includes('Present') ? job.period.replace('Present', t('experience.present')) : job.period }}
+                  {{ job.period.includes('Present') ? job.period.replace('Present', t('experience.present')) : job.period.includes('Presente') ? job.period.replace('Presente', t('experience.present')) : job.period }}
                 </time>
               </div>
               <p class="text-slate-300 text-sm leading-relaxed text-balance">
@@ -188,7 +169,7 @@ const jobs = [
               </li>
             </ul>
             
-            <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700 flex items-start">
+            <div v-if="t('education.note')" class="bg-slate-800/50 p-4 rounded-xl border border-slate-700 flex items-start">
               <div class="mr-3 text-blue-400 shrink-0">ℹ️</div>
               <p class="text-sm text-slate-400 italic">
                 {{ t('education.note') }}

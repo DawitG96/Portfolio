@@ -54,10 +54,11 @@ const NAV_LINKS = [
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 border-t border-slate-800 py-8">
+    <footer class="bg-slate-900 border-t border-slate-800 py-8 relative">
       <div class="max-w-7xl mx-auto px-4 text-center">
-        <p class="text-slate-400 text-sm">
+        <p class="text-slate-400 text-sm flex items-center justify-center gap-2">
           {{ t('footer.copyright', { year }) }}
+          <router-link to="/admin" title="Admin Dashboard" class="w-1.5 h-1.5 rounded-full bg-slate-700 opacity-20 hover:opacity-100 transition-opacity"></router-link>
         </p>
       </div>
     </footer>

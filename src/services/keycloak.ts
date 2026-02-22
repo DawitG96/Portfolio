@@ -7,7 +7,7 @@ interface KeycloakConfig {
 }
 
 const config: KeycloakConfig = {
-  url: 'https://keycloak.myhome.local', // replace with actual URL if different
+  url: 'https://dawit.sytes.net/auth',
   realm: 'myhome',
   clientId: 'portfolio-client' // you will need to create this client in your Keycloak realm
 }
