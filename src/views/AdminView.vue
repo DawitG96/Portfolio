@@ -64,6 +64,18 @@ const handleSaveProject = async () => {
   }
 }
 
+const handleEditProject = (p: Project) => {
+  newProject.value = { ...p }
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+const cancelEditProject = () => {
+  newProject.value = {
+    imageUrl: '', linkUrl: '', sourceUrl: '', orderIndex: store.projects.length + 1,
+    titleEn: '', descriptionEn: '', titleIt: '', descriptionIt: ''
+  }
+}
+
 const handleDeleteProject = async (id: number | undefined) => {
   if (id && confirm('Are you sure you want to delete this project?')) {
     try {
@@ -84,6 +96,19 @@ const handleSaveExperience = async () => {
     }
   } catch (e) {
     alert('Failed to save experience')
+  }
+}
+
+const handleEditExperience = (e: Experience) => {
+  newExperience.value = { ...e }
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+const cancelEditExperience = () => {
+  newExperience.value = {
+    company: '', orderIndex: store.experiences.length + 1,
+    titleEn: '', periodEn: '', descriptionEn: '',
+    titleIt: '', periodIt: '', descriptionIt: ''
   }
 }
 
@@ -110,6 +135,19 @@ const handleSaveEducation = async () => {
   }
 }
 
+const handleEditEducation = (e: Education) => {
+  newEducation.value = { ...e }
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+const cancelEditEducation = () => {
+  newEducation.value = {
+    school: '', orderIndex: store.educations.length + 1,
+    degreeEn: '', periodEn: '', descriptionEn: '',
+    degreeIt: '', periodIt: '', descriptionIt: ''
+  }
+}
+
 const handleDeleteEducation = async (id: number | undefined) => {
   if (id && confirm('Delete this education?')) {
     try {
@@ -129,10 +167,10 @@ const handleDeleteEducation = async (id: number | undefined) => {
         <p class="text-slate-400">Authenticated as: <span class="text-emerald-400">{{ keycloak?.tokenParsed?.preferred_username }}</span></p>
       </div>
       <div class="flex gap-4">
-        <button @click="router.push('/')" class="py-2 px-4 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-colors">
+        <button @click="router.push('/')" aria-label="Back to Site" class="py-2 px-4 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-colors focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:outline-none">
           Back to Site
         </button>
-        <button @click="handleLogout" class="py-2 px-4 bg-red-600/80 hover:bg-red-600 text-white rounded-lg font-medium transition-colors">
+        <button @click="handleLogout" aria-label="Logout" class="py-2 px-4 bg-red-600/80 hover:bg-red-600 text-white rounded-lg font-medium transition-colors focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:outline-none">
           Logout
         </button>
       </div>
@@ -140,13 +178,13 @@ const handleDeleteEducation = async (id: number | undefined) => {
 
     <!-- Tabs -->
     <div class="flex space-x-4 mb-6 border-b border-slate-700 pb-2">
-      <button @click="activeTab = 'projects'" :class="['px-4 py-2 font-medium rounded-t-lg transition-colors', activeTab === 'projects' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800']">
+      <button @click="activeTab = 'projects'" aria-label="Projects tab" :class="['px-4 py-2 font-medium rounded-t-lg transition-colors focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none', activeTab === 'projects' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800']">
         Projects
       </button>
-      <button @click="activeTab = 'experiences'" :class="['px-4 py-2 font-medium rounded-t-lg transition-colors', activeTab === 'experiences' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800']">
+      <button @click="activeTab = 'experiences'" aria-label="Experiences tab" :class="['px-4 py-2 font-medium rounded-t-lg transition-colors focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none', activeTab === 'experiences' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800']">
         Experiences
       </button>
-      <button @click="activeTab = 'educations'" :class="['px-4 py-2 font-medium rounded-t-lg transition-colors', activeTab === 'educations' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800']">
+      <button @click="activeTab = 'educations'" aria-label="Education tab" :class="['px-4 py-2 font-medium rounded-t-lg transition-colors focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none', activeTab === 'educations' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800']">
         Education
       </button>
     </div>
@@ -156,21 +194,26 @@ const handleDeleteEducation = async (id: number | undefined) => {
       <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg">
         <h2 class="text-xl font-bold text-white mb-4">Add New Project</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input v-model="newProject.titleEn" placeholder="Title (EN)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
-          <input v-model="newProject.titleIt" placeholder="Title (IT)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
+          <input v-model="newProject.titleEn" aria-label="Project Title EN" placeholder="Title (EN)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
+          <input v-model="newProject.titleIt" aria-label="Project Title IT" placeholder="Title (IT)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
           
-          <textarea v-model="newProject.descriptionEn" placeholder="Description (EN)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white h-24"></textarea>
-          <textarea v-model="newProject.descriptionIt" placeholder="Description (IT)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white h-24"></textarea>
+          <textarea v-model="newProject.descriptionEn" aria-label="Project Description EN" placeholder="Description (EN)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white h-24 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"></textarea>
+          <textarea v-model="newProject.descriptionIt" aria-label="Project Description IT" placeholder="Description (IT)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white h-24 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"></textarea>
           
-          <input v-model="newProject.imageUrl" placeholder="Image URL e.g. /img/portfolio.png" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
-          <input v-model.number="newProject.orderIndex" type="number" placeholder="Order Index (0, 1, 2...)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
+          <input v-model="newProject.imageUrl" aria-label="Project Image URL" placeholder="Image URL e.g. /img/portfolio.png" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
+          <input v-model.number="newProject.orderIndex" type="number" aria-label="Project Order Index" placeholder="Order Index (0, 1, 2...)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
           
-          <input v-model="newProject.linkUrl" placeholder="Website Link URL (Optional)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
-          <input v-model="newProject.sourceUrl" placeholder="Source Code URL (Optional)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
+          <input v-model="newProject.linkUrl" aria-label="Project Link URL" placeholder="Website Link URL (Optional)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
+          <input v-model="newProject.sourceUrl" aria-label="Project Source URL" placeholder="Source Code URL (Optional)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
         </div>
-        <button @click="handleSaveProject" class="mt-4 py-2 px-6 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors">
-          Save Project
-        </button>
+        <div class="flex gap-4">
+          <button @click="handleSaveProject" :aria-label="newProject.id ? 'Update Project' : 'Save Project'" class="mt-4 py-2 px-6 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none">
+            {{ newProject.id ? 'Update Project' : 'Save Project' }}
+          </button>
+          <button v-if="newProject.id" @click="cancelEditProject" aria-label="Cancel edit" class="mt-4 py-2 px-6 bg-slate-600 hover:bg-slate-500 text-white rounded-lg font-medium transition-colors focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:outline-none">
+            Cancel
+          </button>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 gap-4">
@@ -179,9 +222,14 @@ const handleDeleteEducation = async (id: number | undefined) => {
             <h3 class="text-lg font-bold text-white">{{ p.titleEn }} / {{ p.titleIt }} <span class="text-xs ml-2 bg-slate-700 px-2 py-1 rounded">Order: {{ p.orderIndex }}</span></h3>
             <p class="text-sm text-slate-400 mt-1 truncate max-w-2xl">{{ p.descriptionEn }}</p>
           </div>
-          <button @click="handleDeleteProject(p.id)" class="text-red-400 hover:text-red-300 bg-red-400/10 hover:bg-red-400/20 px-3 py-1.5 rounded-lg transition-colors">
-            Delete
-          </button>
+          <div class="flex gap-2">
+            <button @click="handleEditProject(p)" :aria-label="'Edit project ' + p.titleEn" class="text-blue-400 hover:text-blue-300 bg-blue-400/10 hover:bg-blue-400/20 px-3 py-1.5 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">
+              Edit
+            </button>
+            <button @click="handleDeleteProject(p.id)" :aria-label="'Delete project ' + p.titleEn" class="text-red-400 hover:text-red-300 bg-red-400/10 hover:bg-red-400/20 px-3 py-1.5 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:outline-none">
+              Delete
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -191,21 +239,26 @@ const handleDeleteEducation = async (id: number | undefined) => {
       <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg">
         <h2 class="text-xl font-bold text-white mb-4">Add New Experience</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input v-model="newExperience.titleEn" placeholder="Job Title (EN)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
-          <input v-model="newExperience.titleIt" placeholder="Job Title (IT)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
+          <input v-model="newExperience.titleEn" aria-label="Job Title EN" placeholder="Job Title (EN)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
+          <input v-model="newExperience.titleIt" aria-label="Job Title IT" placeholder="Job Title (IT)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
           
-          <input v-model="newExperience.company" placeholder="Company Name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
-          <input v-model.number="newExperience.orderIndex" type="number" placeholder="Order Index (0, 1, 2...)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
+          <input v-model="newExperience.company" aria-label="Company Name" placeholder="Company Name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
+          <input v-model.number="newExperience.orderIndex" type="number" aria-label="Experience Order Index" placeholder="Order Index (0, 1, 2...)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
 
-          <input v-model="newExperience.periodEn" placeholder="Period (EN) e.g. Jan 2021 - Present" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
-          <input v-model="newExperience.periodIt" placeholder="Period (IT) e.g. Gen 2021 - Presente" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
+          <input v-model="newExperience.periodEn" aria-label="Job Period EN" placeholder="Period (EN) e.g. Jan 2021 - Present" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
+          <input v-model="newExperience.periodIt" aria-label="Job Period IT" placeholder="Period (IT) e.g. Gen 2021 - Presente" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
           
-          <textarea v-model="newExperience.descriptionEn" placeholder="Description (EN)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white h-24"></textarea>
-          <textarea v-model="newExperience.descriptionIt" placeholder="Description (IT)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white h-24"></textarea>
+          <textarea v-model="newExperience.descriptionEn" aria-label="Job Description EN" placeholder="Description (EN)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white h-24 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"></textarea>
+          <textarea v-model="newExperience.descriptionIt" aria-label="Job Description IT" placeholder="Description (IT)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white h-24 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"></textarea>
         </div>
-        <button @click="handleSaveExperience" class="mt-4 py-2 px-6 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors">
-          Save Experience
-        </button>
+        <div class="flex gap-4">
+          <button @click="handleSaveExperience" :aria-label="newExperience.id ? 'Update Experience' : 'Save Experience'" class="mt-4 py-2 px-6 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none">
+            {{ newExperience.id ? 'Update Experience' : 'Save Experience' }}
+          </button>
+          <button v-if="newExperience.id" @click="cancelEditExperience" aria-label="Cancel edit" class="mt-4 py-2 px-6 bg-slate-600 hover:bg-slate-500 text-white rounded-lg font-medium transition-colors focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:outline-none">
+            Cancel
+          </button>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 gap-4">
@@ -214,9 +267,14 @@ const handleDeleteEducation = async (id: number | undefined) => {
             <h3 class="text-lg font-bold text-white">{{ e.titleEn }} at {{ e.company }} <span class="text-xs ml-2 bg-slate-700 px-2 py-1 rounded">Order: {{ e.orderIndex }}</span></h3>
             <p class="text-sm text-slate-400 mt-1 truncate max-w-2xl">{{ e.descriptionEn }}</p>
           </div>
-          <button @click="handleDeleteExperience(e.id)" class="text-red-400 hover:text-red-300 bg-red-400/10 hover:bg-red-400/20 px-3 py-1.5 rounded-lg transition-colors">
-            Delete
-          </button>
+          <div class="flex gap-2">
+            <button @click="handleEditExperience(e)" :aria-label="'Edit experience at ' + e.company" class="text-blue-400 hover:text-blue-300 bg-blue-400/10 hover:bg-blue-400/20 px-3 py-1.5 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">
+              Edit
+            </button>
+            <button @click="handleDeleteExperience(e.id)" :aria-label="'Delete experience at ' + e.company" class="text-red-400 hover:text-red-300 bg-red-400/10 hover:bg-red-400/20 px-3 py-1.5 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:outline-none">
+              Delete
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -226,21 +284,26 @@ const handleDeleteEducation = async (id: number | undefined) => {
       <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg">
         <h2 class="text-xl font-bold text-white mb-4">Add New Education</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input v-model="newEducation.degreeEn" placeholder="Degree (EN)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
-          <input v-model="newEducation.degreeIt" placeholder="Degree (IT)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
+          <input v-model="newEducation.degreeEn" aria-label="Degree EN" placeholder="Degree (EN)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
+          <input v-model="newEducation.degreeIt" aria-label="Degree IT" placeholder="Degree (IT)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
           
-          <input v-model="newEducation.school" placeholder="School/University Name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
-          <input v-model.number="newEducation.orderIndex" type="number" placeholder="Order Index (0, 1, 2...)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
+          <input v-model="newEducation.school" aria-label="School/University Name" placeholder="School/University Name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
+          <input v-model.number="newEducation.orderIndex" type="number" aria-label="Education Order Index" placeholder="Order Index (0, 1, 2...)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
 
-          <input v-model="newEducation.periodEn" placeholder="Period (EN) e.g. 2018 - 2021" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
-          <input v-model="newEducation.periodIt" placeholder="Period (IT) e.g. 2018 - 2021" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white" />
+          <input v-model="newEducation.periodEn" aria-label="Education Period EN" placeholder="Period (EN) e.g. 2018 - 2021" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
+          <input v-model="newEducation.periodIt" aria-label="Education Period IT" placeholder="Period (IT) e.g. 2018 - 2021" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none" />
           
-          <textarea v-model="newEducation.descriptionEn" placeholder="Description (EN)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white h-24"></textarea>
-          <textarea v-model="newEducation.descriptionIt" placeholder="Description (IT)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white h-24"></textarea>
+          <textarea v-model="newEducation.descriptionEn" aria-label="Education Description EN" placeholder="Description (EN)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white h-24 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"></textarea>
+          <textarea v-model="newEducation.descriptionIt" aria-label="Education Description IT" placeholder="Description (IT)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white h-24 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"></textarea>
         </div>
-        <button @click="handleSaveEducation" class="mt-4 py-2 px-6 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors">
-          Save Education
-        </button>
+        <div class="flex gap-4">
+          <button @click="handleSaveEducation" :aria-label="newEducation.id ? 'Update Education' : 'Save Education'" class="mt-4 py-2 px-6 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none">
+            {{ newEducation.id ? 'Update Education' : 'Save Education' }}
+          </button>
+          <button v-if="newEducation.id" @click="cancelEditEducation" aria-label="Cancel edit" class="mt-4 py-2 px-6 bg-slate-600 hover:bg-slate-500 text-white rounded-lg font-medium transition-colors focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:outline-none">
+            Cancel
+          </button>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 gap-4">
@@ -249,9 +312,14 @@ const handleDeleteEducation = async (id: number | undefined) => {
             <h3 class="text-lg font-bold text-white">{{ e.degreeEn }} at {{ e.school }} <span class="text-xs ml-2 bg-slate-700 px-2 py-1 rounded">Order: {{ e.orderIndex }}</span></h3>
             <p class="text-sm text-slate-400 mt-1 truncate max-w-2xl">{{ e.descriptionEn }}</p>
           </div>
-          <button @click="handleDeleteEducation(e.id)" class="text-red-400 hover:text-red-300 bg-red-400/10 hover:bg-red-400/20 px-3 py-1.5 rounded-lg transition-colors">
-            Delete
-          </button>
+          <div class="flex gap-2">
+            <button @click="handleEditEducation(e)" :aria-label="'Edit education at ' + e.school" class="text-blue-400 hover:text-blue-300 bg-blue-400/10 hover:bg-blue-400/20 px-3 py-1.5 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none">
+              Edit
+            </button>
+            <button @click="handleDeleteEducation(e.id)" :aria-label="'Delete education at ' + e.school" class="text-red-400 hover:text-red-300 bg-red-400/10 hover:bg-red-400/20 px-3 py-1.5 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:outline-none">
+              Delete
+            </button>
+          </div>
         </div>
       </div>
     </div>

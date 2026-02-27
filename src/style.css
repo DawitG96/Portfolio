@@ -14,6 +14,15 @@
   --color-primary-950: #172554;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* Offset for fixed navbar */
+}
+
+li a {
+  font-size: 1.4em;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

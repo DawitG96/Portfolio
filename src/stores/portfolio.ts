@@ -3,7 +3,7 @@ import axios from 'axios'
 import { keycloak } from '../services/keycloak'
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: import.meta.env.VITE_API_URL || '/portfolio/api',
   timeout: 10000,
 })
 
@@ -89,7 +89,9 @@ export const usePortfolioStore = defineStore('portfolio', {
 
     async saveProject(project: Project) {
       try {
-        const res = await api.post<Project>('/projects', project)
+        const res = project.id 
+          ? await api.put<Project>(`/projects/${project.id}`, project)
+          : await api.post<Project>('/projects', project)
         const idx = this.projects.findIndex(p => p.id === res.data.id)
         if (idx !== -1) {
           this.projects[idx] = res.data
@@ -116,7 +118,9 @@ export const usePortfolioStore = defineStore('portfolio', {
 
     async saveExperience(exp: Experience) {
       try {
-        const res = await api.post<Experience>('/experiences', exp)
+        const res = exp.id
+          ? await api.put<Experience>(`/experiences/${exp.id}`, exp)
+          : await api.post<Experience>('/experiences', exp)
         const idx = this.experiences.findIndex(e => e.id === res.data.id)
         if (idx !== -1) {
           this.experiences[idx] = res.data
@@ -142,7 +146,9 @@ export const usePortfolioStore = defineStore('portfolio', {
 
     async saveEducation(edu: Education) {
       try {
-        const res = await api.post<Education>('/educations', edu)
+        const res = edu.id
+          ? await api.put<Education>(`/educations/${edu.id}`, edu)
+          : await api.post<Education>('/educations', edu)
         const idx = this.educations.findIndex(e => e.id === res.data.id)
         if (idx !== -1) {
           this.educations[idx] = res.data

@@ -53,7 +53,7 @@ const educations = computed(() => {
       </div>
       
       <div class="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-        <img src="/img/my-logo.png" alt="Dawit Gulino" class="w-40 h-40 rounded-full object-cover border-4 border-slate-800 shadow-2xl mb-8 ring-4 ring-blue-500/20" />
+        <img src="/img/my-logo.png" alt="" class="w-40 h-40 rounded-full object-cover border-4 border-slate-800 shadow-2xl mb-8 ring-4 ring-blue-500/20" />
         <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">
           {{ t('hero.title') }}
         </h1>
@@ -61,17 +61,23 @@ const educations = computed(() => {
           {{ t('hero.subtitle') }}
         </p>
         
-        <div class="flex space-x-6 mt-6">
-          <a href="https://www.linkedin.com/in/dawitgulino" target="_blank" rel="noopener" class="text-slate-400 hover:text-blue-400 transition-colors bg-slate-800 p-3 rounded-full hover:bg-slate-700 ring-1 ring-slate-700">
-            <Linkedin class="w-6 h-6" />
-          </a>
-          <a href="https://github.com/DawitG96" target="_blank" rel="noopener" class="text-slate-400 hover:text-white transition-colors bg-slate-800 p-3 rounded-full hover:bg-slate-700 ring-1 ring-slate-700">
-            <Github class="w-6 h-6" />
-          </a>
-          <a href="mailto:dawit.gulino@gmail.com" class="text-slate-400 hover:text-emerald-400 transition-colors bg-slate-800 p-3 rounded-full hover:bg-slate-700 ring-1 ring-slate-700">
-            <Mail class="w-6 h-6" />
-          </a>
-        </div>
+        <ul class="flex space-x-6 mt-6">
+          <li>
+            <a href="https://www.linkedin.com/in/dawitgulino" target="_blank" rel="noopener" aria-label="LinkedIn Profile" tabindex="0" class="text-slate-400 hover:text-blue-400 transition-colors bg-slate-800 p-3 rounded-full hover:bg-slate-700 ring-1 ring-slate-700 focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none block">
+              <Linkedin class="w-6 h-6" />
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/DawitG96" target="_blank" rel="noopener" aria-label="GitHub Profile" tabindex="0" class="text-slate-400 hover:text-white transition-colors bg-slate-800 p-3 rounded-full hover:bg-slate-700 ring-1 ring-slate-700 focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none block">
+              <Github class="w-6 h-6" />
+            </a>
+          </li>
+          <li>
+            <a href="mailto:dawit.gulino@gmail.com" aria-label="Email Me" tabindex="0" class="text-slate-400 hover:text-emerald-400 transition-colors bg-slate-800 p-3 rounded-full hover:bg-slate-700 ring-1 ring-slate-700 focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none block">
+              <Mail class="w-6 h-6" />
+            </a>
+          </li>
+        </ul>
       </div>
     </section>
 
@@ -86,7 +92,7 @@ const educations = computed(() => {
           <template v-for="project in projects" :key="project.title">
             <div v-if="project.image" class="bg-slate-900 rounded-2xl overflow-hidden border border-slate-700 shadow-xl transition-transform hover:-translate-y-2 hover:shadow-2xl hover:border-blue-500/30 flex flex-col">
               <div class="aspect-video overflow-hidden">
-                <img :src="project.image" :alt="project.title" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+                <img :src="project.image" alt="" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
               </div>
               <div class="p-6 flex flex-col flex-grow">
                 <h3 class="text-xl font-bold text-white mb-2">{{ project.title }}</h3>
@@ -95,13 +101,13 @@ const educations = computed(() => {
                 </p>
                 
                 <div class="mt-auto flex flex-wrap gap-4">
-                  <a v-if="project.link" :href="project.link" target="_blank" rel="noopener"
-                     class="inline-flex items-center text-sm font-medium text-blue-400 hover:text-blue-300">
+                  <a v-if="project.link" :href="project.link" target="_blank" rel="noopener" :aria-label="'View site for ' + project.title" tabindex="0"
+                     class="inline-flex items-center text-sm font-medium text-blue-400 hover:text-blue-300 focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none rounded-sm">
                     <ExternalLink class="w-4 h-4 mr-2" />
                     {{ t('projects.viewSite') }}
                   </a>
-                  <a v-if="project.source" :href="project.source" target="_blank" rel="noopener"
-                     class="inline-flex items-center text-sm font-medium text-slate-300 hover:text-white">
+                  <a v-if="project.source" :href="project.source" target="_blank" rel="noopener" :aria-label="'View source code for ' + project.title" tabindex="0"
+                     class="inline-flex items-center text-sm font-medium text-slate-300 hover:text-white focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none rounded-sm">
                     <Github class="w-4 h-4 mr-2" />
                     {{ t('projects.sourceCode') }}
                   </a>
