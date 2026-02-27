@@ -12,7 +12,6 @@ onMounted(() => {
   store.fetchAll()
 })
 
-// Retrieve projects and jobs from backend via pinia dynamically
 const projects = computed(() => {
   return store.projects.map((item: Project) => ({
     title: locale.value === 'it' ? item.titleIt : item.titleEn,
@@ -44,9 +43,9 @@ const educations = computed(() => {
 
 <template>
   <div class="flex flex-col">
-    <!-- Hero Section -->
+
     <section class="py-20 lg:py-32 bg-slate-900 text-center px-4 relative overflow-hidden">
-      <!-- Background Elements -->
+
       <div class="absolute inset-0 z-0">
         <div class="absolute -top-40 -right-40 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
         <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-emerald-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
@@ -81,7 +80,7 @@ const educations = computed(() => {
       </div>
     </section>
 
-    <!-- Projects Section -->
+
     <section id="projects" class="py-20 bg-slate-800 px-4">
       <div class="max-w-7xl mx-auto">
         <h2 class="text-3xl font-bold text-center text-white mb-12">
@@ -119,7 +118,7 @@ const educations = computed(() => {
       </div>
     </section>
 
-    <!-- Experience Section -->
+
     <section id="experience" class="py-20 bg-slate-900 px-4">
       <div class="max-w-4xl mx-auto">
         <h2 class="text-3xl font-bold text-center text-white mb-12">
@@ -151,7 +150,7 @@ const educations = computed(() => {
       </div>
     </section>
 
-    <!-- Education Section -->
+
     <section id="education" class="py-20 bg-slate-800 px-4 border-t border-slate-700">
       <div class="max-w-4xl mx-auto">
         <h2 class="text-3xl font-bold text-center text-white mb-12">

@@ -7,7 +7,6 @@ import { createPinia } from 'pinia'
 import { initKeycloak } from './services/keycloak'
 
 const bootstrap = async () => {
-  // Try to initialize keycloak. Error or not, we mount the public app
   await initKeycloak()
   
   const app = createApp(App)

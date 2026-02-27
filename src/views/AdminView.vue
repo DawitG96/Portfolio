@@ -54,7 +54,6 @@ const handleLogout = () => {
 const handleSaveProject = async () => {
   try {
     await store.saveProject({ ...newProject.value })
-    // reset form
     newProject.value = {
       imageUrl: '', linkUrl: '', sourceUrl: '', orderIndex: store.projects.length + 1,
       titleEn: '', descriptionEn: '', titleIt: '', descriptionIt: ''
@@ -176,7 +175,7 @@ const handleDeleteEducation = async (id: number | undefined) => {
       </div>
     </div>
 
-    <!-- Tabs -->
+
     <div class="flex space-x-4 mb-6 border-b border-slate-700 pb-2">
       <button @click="activeTab = 'projects'" aria-label="Projects tab" :class="['px-4 py-2 font-medium rounded-t-lg transition-colors focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none', activeTab === 'projects' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800']">
         Projects
@@ -189,7 +188,7 @@ const handleDeleteEducation = async (id: number | undefined) => {
       </button>
     </div>
 
-    <!-- Projects Section -->
+
     <div v-if="activeTab === 'projects'" class="space-y-8 animate-in fade-in">
       <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg">
         <h2 class="text-xl font-bold text-white mb-4">Add New Project</h2>
@@ -234,7 +233,7 @@ const handleDeleteEducation = async (id: number | undefined) => {
       </div>
     </div>
 
-    <!-- Experiences Section -->
+
     <div v-if="activeTab === 'experiences'" class="space-y-8 animate-in fade-in">
       <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg">
         <h2 class="text-xl font-bold text-white mb-4">Add New Experience</h2>
@@ -279,7 +278,7 @@ const handleDeleteEducation = async (id: number | undefined) => {
       </div>
     </div>
 
-    <!-- Educations Section -->
+
     <div v-if="activeTab === 'educations'" class="space-y-8 animate-in fade-in">
       <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg">
         <h2 class="text-xl font-bold text-white mb-4">Add New Education</h2>

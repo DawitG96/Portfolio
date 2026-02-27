@@ -23,7 +23,7 @@ export const initKeycloak = async (): Promise<boolean> => {
       checkLoginIframe: false
     })
     
-    // Setup token refresh
+
     keycloak.onTokenExpired = async () => {
       try {
         await keycloak.updateToken(30)

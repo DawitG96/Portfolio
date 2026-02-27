@@ -20,9 +20,9 @@ const messages = {
         {
           title: 'ifh-webapp',
           description: 'Angular app deployed on Firebase hosting — integrates Keycloak for authentication and Firebase for content storage; includes a lightweight CMS and dashboard.',
-          image: '/img/ifh-webapp.png', // We'll resolve this in the component
+          image: '/img/ifh-webapp.png',
           link: 'https://italian-family-hospitality.web.app/',
-          source: '' // We can set empty if none
+          source: ''
         },
         {
           title: 'Minefield',
@@ -48,7 +48,7 @@ const messages = {
         {
           title: 'MyHome',
           description: 'A microservices backend in Java (Quarkus) and Angular micro-frontends for managing home, inventory, recipes, and tools.',
-          image: '', // Can add placeholder later
+          image: '',
           link: '',
           source: ''
         },
@@ -193,7 +193,7 @@ const messages = {
 
 export const i18n = createI18n({
   legacy: false,
-  locale: 'en', // default locale
+  locale: 'en',
   fallbackLocale: 'it',
   messages,
 })

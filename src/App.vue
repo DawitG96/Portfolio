@@ -19,7 +19,7 @@ const NAV_LINKS = [
 
 <template>
   <div class="min-h-screen flex flex-col">
-    <!-- Navigation -->
+
     <nav class="fixed top-0 w-full bg-slate-900/90 backdrop-blur-sm z-50 border-b border-slate-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
@@ -50,12 +50,12 @@ const NAV_LINKS = [
       </div>
     </nav>
 
-    <!-- Main Content routing -->
+
     <main class="flex-grow pt-16">
       <router-view />
     </main>
 
-    <!-- Footer -->
+
     <footer class="bg-slate-900 border-t border-slate-800 py-8 relative">
       <div class="max-w-7xl mx-auto px-4 text-center">
         <p class="text-slate-400 text-sm flex items-center justify-center gap-2">
