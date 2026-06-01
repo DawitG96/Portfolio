@@ -6,8 +6,9 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Production stage
-FROM nginx:stable-alpine as production-stage
+# Production stage — pin to mainline alpine and force package upgrades for CVE fixes
+FROM nginx:alpine as production-stage
+RUN apk upgrade --no-cache
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 # Copy custom nginx config to handle SPA routing
 COPY nginx.conf /etc/nginx/conf.d/default.conf
