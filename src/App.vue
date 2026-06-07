@@ -40,7 +40,7 @@ const NAV_LINKS = [
             </ul>
           </div>
 
-          <div class="flex items-center space-x-4">
+          <div class="flex items-center space-x-3">
             <button @click="toggleLanguage" aria-label="Toggle language"
                     class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-md text-sm font-medium transition-colors ring-1 ring-slate-700 focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none">
               {{ locale.toUpperCase() }}

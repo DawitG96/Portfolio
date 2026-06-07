@@ -8,7 +8,37 @@ import { useRouter } from 'vue-router'
 const store = usePortfolioStore()
 const router = useRouter()
 
-const activeTab = ref<'projects' | 'experiences' | 'educations'>('projects')
+const activeTab = ref<'projects' | 'experiences' | 'educations' | 'cv'>('projects')
+
+type CvInfo = { filename: string; updatedAt: string } | null
+const cvInfo = ref<Record<string, CvInfo>>({ it: null, en: null })
+const cvUploading = ref<Record<string, boolean>>({ it: false, en: false })
+const cvMessage = ref<Record<string, string>>({ it: '', en: '' })
+
+async function loadCvInfo() {
+  try {
+    cvInfo.value = await store.fetchCvInfo()
+  } catch {
+    // not critical
+  }
+}
+
+async function handleCvUpload(lang: 'it' | 'en', event: Event) {
+  const file = (event.target as HTMLInputElement).files?.[0]
+  if (!file) return
+  cvUploading.value[lang] = true
+  cvMessage.value[lang] = ''
+  try {
+    await store.uploadCv(lang, file)
+    cvMessage.value[lang] = 'ok'
+    await loadCvInfo()
+  } catch {
+    cvMessage.value[lang] = 'error'
+  } finally {
+    cvUploading.value[lang] = false
+    ;(event.target as HTMLInputElement).value = ''
+  }
+}
 
 const newProject = ref<Project>({
   imageUrl: '',
@@ -45,6 +75,7 @@ const newEducation = ref<Education>({
 
 onMounted(() => {
   store.fetchAll()
+  loadCvInfo()
 })
 
 const handleLogout = () => {
@@ -186,6 +217,9 @@ const handleDeleteEducation = async (id: number | undefined) => {
       <button @click="activeTab = 'educations'" aria-label="Education tab" :class="['px-4 py-2 font-medium rounded-t-lg transition-colors focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none', activeTab === 'educations' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800']">
         Education
       </button>
+      <button @click="activeTab = 'cv'" aria-label="CV Files tab" :class="['px-4 py-2 font-medium rounded-t-lg transition-colors focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none', activeTab === 'cv' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800']">
+        CV Files
+      </button>
     </div>
 
 
@@ -320,6 +354,44 @@ const handleDeleteEducation = async (id: number | undefined) => {
             </button>
           </div>
         </div>
+      </div>
+    </div>
+
+
+    <div v-if="activeTab === 'cv'" class="space-y-6 animate-in fade-in">
+      <div v-for="lang in (['en', 'it'] as const)" :key="lang"
+           class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-lg">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white">CV {{ lang.toUpperCase() }}</h2>
+            <template v-if="cvInfo[lang]">
+              <p class="text-sm text-slate-400 mt-1">{{ cvInfo[lang]!.filename }}</p>
+              <p class="text-xs text-slate-500">Updated: {{ new Date(cvInfo[lang]!.updatedAt).toLocaleString() }}</p>
+            </template>
+            <p v-else class="text-sm text-slate-500 mt-1">No file uploaded yet</p>
+          </div>
+
+          <label :for="'cv-upload-' + lang"
+                 class="cursor-pointer inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors focus-within:ring-2 focus-within:ring-emerald-400">
+            <span v-if="cvUploading[lang]">Uploading…</span>
+            <span v-else>{{ cvInfo[lang] ? 'Replace PDF' : 'Upload PDF' }}</span>
+            <input
+              :id="'cv-upload-' + lang"
+              type="file"
+              accept="application/pdf"
+              class="sr-only"
+              :disabled="cvUploading[lang]"
+              @change="handleCvUpload(lang, $event)"
+            />
+          </label>
+        </div>
+
+        <p v-if="cvMessage[lang] === 'ok'" role="status" class="text-emerald-400 text-sm">
+          Upload successful.
+        </p>
+        <p v-else-if="cvMessage[lang] === 'error'" role="alert" class="text-red-400 text-sm">
+          Upload failed. Please try again.
+        </p>
       </div>
     </div>
 

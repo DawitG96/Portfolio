@@ -93,6 +93,15 @@ const messages = {
     },
     footer: {
       copyright: 'Copyright © Dawit Gulino {year}'
+    },
+    cv: {
+      sectionTitle: 'Download',
+      sectionSubtitle: 'Download my CV in your preferred language.',
+      downloadAriaIt: 'Download CV in Italian (PDF)',
+      downloadAriaEn: 'Download CV in English (PDF)',
+      rateLimitError: 'Too many requests. Try again in a minute.',
+      notFound: 'File not available yet.',
+      downloadError: 'Download failed. Please try again.'
     }
   },
   it: {
@@ -187,6 +196,15 @@ const messages = {
     },
     footer: {
       copyright: 'Copyright © Dawit Gulino {year}'
+    },
+    cv: {
+      sectionTitle: 'Download',
+      sectionSubtitle: 'Scarica il mio CV nella lingua che preferisci.',
+      downloadAriaIt: 'Scarica il CV in italiano (PDF)',
+      downloadAriaEn: 'Scarica il CV in inglese (PDF)',
+      rateLimitError: 'Troppe richieste. Riprova tra un\'ora.',
+      notFound: 'File non ancora disponibile.',
+      downloadError: 'Download non riuscito. Riprova.'
     }
   }
 }

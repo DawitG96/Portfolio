@@ -1,12 +1,37 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { computed, onMounted } from 'vue'
-import { Github, ExternalLink, Mail, Linkedin } from 'lucide-vue-next'
+import { computed, onMounted, ref } from 'vue'
+import { Github, ExternalLink, Mail, Linkedin, Download } from 'lucide-vue-next'
 import { usePortfolioStore } from '../stores/portfolio'
 import type { Project, Experience, Education } from '../stores/portfolio'
 
 const { t, locale } = useI18n()
 const store = usePortfolioStore()
+const cvDownloading = ref<string | null>(null)
+const cvError = ref<Record<string, string>>({})
+
+async function downloadCv(lang: 'it' | 'en') {
+  if (cvDownloading.value) return
+  cvError.value = { ...cvError.value, [lang]: '' }
+  cvDownloading.value = lang
+  try {
+    const base = import.meta.env.VITE_API_URL ?? '/portfolio/api'
+    const res = await fetch(`${base}/cv/download?lang=${lang}`)
+    if (res.status === 429) { cvError.value[lang] = t('cv.rateLimitError'); return }
+    if (res.status === 404) { cvError.value[lang] = t('cv.notFound'); return }
+    if (!res.ok) { cvError.value[lang] = t('cv.downloadError'); return }
+    const url = URL.createObjectURL(await res.blob())
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `dawit_gulino_cv_${lang}.pdf`
+    a.click()
+    URL.revokeObjectURL(url)
+  } catch {
+    cvError.value[lang] = t('cv.downloadError')
+  } finally {
+    cvDownloading.value = null
+  }
+}
 
 onMounted(() => {
   store.fetchAll()
@@ -175,6 +200,44 @@ const educations = computed(() => {
                 {{ edu.description }}
               </p>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="download" class="py-20 bg-slate-900 px-4 border-t border-slate-700">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-white mb-3">{{ t('cv.sectionTitle') }}</h2>
+        <p class="text-slate-400 mb-10">{{ t('cv.sectionSubtitle') }}</p>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <div class="flex flex-col items-center gap-2">
+            <button
+              @click="downloadCv('en')"
+              :disabled="!!cvDownloading"
+              :aria-label="t('cv.downloadAriaEn')"
+              :aria-busy="cvDownloading === 'en'"
+              class="inline-flex items-center gap-2 px-8 py-3 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none shadow-lg"
+            >
+              <Download class="w-5 h-5" aria-hidden="true" />
+              CV EN
+            </button>
+            <p v-if="cvError['en']" role="alert" class="text-red-400 text-xs">{{ cvError['en'] }}</p>
+          </div>
+
+          <div class="flex flex-col items-center gap-2">
+            <button
+              @click="downloadCv('it')"
+              :disabled="!!cvDownloading"
+              :aria-label="t('cv.downloadAriaIt')"
+              :aria-busy="cvDownloading === 'it'"
+              class="inline-flex items-center gap-2 px-8 py-3 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none shadow-lg"
+            >
+              <Download class="w-5 h-5" aria-hidden="true" />
+              CV IT
+            </button>
+            <p v-if="cvError['it']" role="alert" class="text-red-400 text-xs">{{ cvError['it'] }}</p>
           </div>
         </div>
       </div>

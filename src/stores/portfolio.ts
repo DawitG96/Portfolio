@@ -170,6 +170,20 @@ export const usePortfolioStore = defineStore('portfolio', {
         console.error('Failed to delete education', err)
         throw err
       }
+    },
+
+    async fetchCvInfo(): Promise<Record<string, { filename: string; updatedAt: string } | null>> {
+      const res = await api.get<Record<string, { filename: string; updatedAt: string } | null>>('/cv/info')
+      return res.data
+    },
+
+    async uploadCv(lang: 'it' | 'en', file: File): Promise<void> {
+      const form = new FormData()
+      form.append('lang', lang)
+      form.append('file', file)
+      await api.post('/cv/upload', form, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
     }
   }
 })
